@@ -65,3 +65,170 @@
 #include <string>
 using namespace std;
 
+// Function to read a matrix
+void readMatrix(int matrix[10][10], int rows, int cols)
+{
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            cout << "Enter element [" << i << "][" << j << "]: ";
+            cin >> matrix[i][j];
+        }
+    }
+}
+
+// Function to display a matrix
+void displayMatrix(int matrix[10][10], int rows, int cols)
+{
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            cout << setw(6) << matrix[i][j];
+        }
+        cout << endl;
+    }
+}
+
+// Part A: Transpose a matrix
+void transposeMatrix(int matrix[10][10], int transpose[10][10], int rows, int cols)
+{
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            transpose[j][i] = matrix[i][j];
+        }
+    }
+}
+
+// Part B: Add two matrices
+void addMatrices(int A[10][10], int B[10][10], int sum[10][10], int rows, int cols)
+{
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            sum[i][j] = A[i][j] + B[i][j];
+        }
+    }
+}
+
+// Part C: Multiply two matrices
+void multiplyMatrices(int A[10][10], int B[10][10], int product[10][10],
+                      int rowsA, int colsA, int colsB)
+{
+    for (int i = 0; i < rowsA; i++)
+    {
+        for (int j = 0; j < colsB; j++)
+        {
+            product[i][j] = 0;
+
+            for (int k = 0; k < colsA; k++)
+            {
+                product[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
+}
+
+int main()
+{
+    int A[10][10], B[10][10], C[10][10];
+    int rows, cols;
+    int rowsA, colsA, rowsB, colsB;
+
+    // ==========================
+    // PART A - Transpose
+    // ==========================
+    cout << "===== PART A: Transpose Matrix =====" << endl;
+
+    cout << "Enter number of rows: ";
+    cin >> rows;
+
+    cout << "Enter number of columns: ";
+    cin >> cols;
+
+    cout << "Enter the matrix elements:" << endl;
+    readMatrix(A, rows, cols);
+
+    transposeMatrix(A, B, rows, cols);
+
+    cout << "\nOriginal Matrix:" << endl;
+    displayMatrix(A, rows, cols);
+
+    cout << "\nTransposed Matrix:" << endl;
+    displayMatrix(B, cols, rows);
+
+    // ==========================
+    // PART B - Matrix Addition
+    // ==========================
+    cout << "\n===== PART B: Add Two Matrices =====" << endl;
+
+    cout << "Enter number of rows: ";
+    cin >> rows;
+
+    cout << "Enter number of columns: ";
+    cin >> cols;
+
+    cout << "Enter Matrix A:" << endl;
+    readMatrix(A, rows, cols);
+
+    cout << "Enter Matrix B:" << endl;
+    readMatrix(B, rows, cols);
+
+    addMatrices(A, B, C, rows, cols);
+
+    cout << "\nMatrix A:" << endl;
+    displayMatrix(A, rows, cols);
+
+    cout << "\nMatrix B:" << endl;
+    displayMatrix(B, rows, cols);
+
+    cout << "\nSum of Matrices:" << endl;
+    displayMatrix(C, rows, cols);
+
+    // ==========================
+    // PART C - Matrix Multiplication
+    // ==========================
+    cout << "\n===== PART C: Multiply Two Matrices =====" << endl;
+
+    cout << "Enter rows of Matrix A: ";
+    cin >> rowsA;
+
+    cout << "Enter columns of Matrix A: ";
+    cin >> colsA;
+
+    cout << "Enter Matrix A:" << endl;
+    readMatrix(A, rowsA, colsA);
+
+    cout << "Enter rows of Matrix B: ";
+    cin >> rowsB;
+
+    cout << "Enter columns of Matrix B: ";
+    cin >> colsB;
+
+    if (colsA != rowsB)
+    {
+        cout << "\nError: Matrix multiplication is not possible." << endl;
+        cout << "Number of columns in Matrix A must equal the number of rows in Matrix B." << endl;
+        return 0;
+    }
+
+    cout << "Enter Matrix B:" << endl;
+    readMatrix(B, rowsB, colsB);
+
+    multiplyMatrices(A, B, C, rowsA, colsA, colsB);
+
+    cout << "\nMatrix A:" << endl;
+    displayMatrix(A, rowsA, colsA);
+
+    cout << "\nMatrix B:" << endl;
+    displayMatrix(B, rowsB, colsB);
+
+    cout << "\nProduct Matrix (A x B):" << endl;
+    displayMatrix(C, rowsA, colsB);
+
+    return 0;
+}
